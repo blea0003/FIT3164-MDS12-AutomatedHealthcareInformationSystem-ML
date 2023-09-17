@@ -3,6 +3,9 @@ This gitignore content is the default python template from github
 Link: https://github.com/github/gitignore/blob/main/Python.gitignore
 """
 
+# model data
+model/data/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
