@@ -17,7 +17,7 @@ def main():
     nparr = np.frombuffer(image_data, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-    output = handwritten_text_recognition(img, debug=True)
+    output = handwritten_text_recognition(img, debug=False)
 
     temp_obj = {
         "ic": "31081960101984",
