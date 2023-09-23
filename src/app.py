@@ -1,14 +1,14 @@
 from flask import Flask, request, jsonify
 import cv2
 import numpy as np
-from main import handwritten_text_recognition
+from main import patient_registration_parser
 
 app = Flask(__name__)
 
-@app.route('/htr', methods=['POST'])
-def main():
+@app.route('/patient_htr', methods=['POST'])
+def patient_htr():
     if 'image' not in request.files:
-        return 'No file part'
+        return 'No image'
 
 
     # Extract image from request
@@ -17,7 +17,15 @@ def main():
     nparr = np.frombuffer(image_data, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-    output = handwritten_text_recognition(img, debug=False)
+    output = patient_registration_parser(img, model="keras_ocr", debug=False)
+
+    return jsonify(output)
+
+
+@app.route('/patient_htr_sample', methods=['POST'])
+def patient_htr_sample():
+    if 'image' not in request.files:
+        return 'No image'
 
     temp_obj = {
         "ic": "31081960101984",
@@ -33,6 +41,7 @@ def main():
     }
 
     return jsonify(temp_obj)
+
 
 
 if __name__ == "__main__":
