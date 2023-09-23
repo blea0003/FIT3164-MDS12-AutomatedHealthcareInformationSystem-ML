@@ -35,6 +35,7 @@ def patient_htr_sample():
         "gender": "Male",
         "nationality": "American",
         "phoneNo": " 5558383",
+        "email": "jerryseinfeld@gmail.com",
         "emergencyNo": "601170735766",
         "emergencyRemarks": "You know George",
         "remarks": "What's the deal with arthritis?"
