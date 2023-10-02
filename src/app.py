@@ -1,15 +1,15 @@
-from flask import Flask, request, jsonify
+from flask import Flask, CORS, request, jsonify
 import cv2
 import numpy as np
 from main import patient_registration_parser
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/patient_htr', methods=['POST'])
 def patient_htr():
     if 'image' not in request.files:
         return 'No image'
-
 
     # Extract image from request
     file = request.files['image']
