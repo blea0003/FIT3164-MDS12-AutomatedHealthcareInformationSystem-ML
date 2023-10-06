@@ -58,7 +58,9 @@ def patient_registration_parser(img, model="keras_ocr", debug=False):
 
     recognized_texts = text_box_htr(img, model=model, debug=debug)
 
-    assert len(recognized_texts) == 11
+    # If not all text boxes detected, just return empty values for all
+    if len(recognized_texts) != 11:
+        recognized_texts = [''] * 11
 
     dict = {
         "ic": recognized_texts[0],
