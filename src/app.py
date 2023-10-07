@@ -9,24 +9,47 @@ CORS(app)
 
 @app.route('/patient_htr', methods=['POST'])
 def patient_htr():
+    """
+    Request body
+    - Image: *Handwritten filled document following template "docs/templates/Patient_Registration_v1.docx"* 
+
+    Returns
+    - Output of patient_registration_parser() on received image
+    """
+    # Check if request contains an 'image' field
     if 'image' not in request.files:
-        return 'No image'
+        return "No image file provided", 400
 
-    # Extract image from request
+    # Check if file has allowed extension
     file = request.files['image']
-    image_data = file.read()
-    nparr = np.frombuffer(image_data, np.uint8)
-    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    allowed_extensions = ['jpg', 'jpeg', 'png']
+    if '.' not in file.filename or file.filename.rsplit('.', 1)[1].lower() not in allowed_extensions:
+        return "Invalid file format. Supported formats: jpg, jpeg, png", 400
+    
+    try:
+        # Read image data and decode it
+        image_data = file.read()
+        nparr = np.frombuffer(image_data, np.uint8)
+        img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-    output = patient_registration_parser(img, model="keras_ocr", debug=False)
+        # Parse document
+        output = patient_registration_parser(img, model="keras_ocr", debug=False)
 
-    return jsonify(output)
+        return jsonify(output)
+    
+    except Exception as e:
+        return f'Error: {str(e)}', 500
 
 
 @app.route('/patient_htr_sample', methods=['POST'])
 def patient_htr_sample():
+    """
+    A sample version of the patient_htr function.
+    Returns the same valid output example regardless of input image.
+    """
+    # Check if request contains an 'image' field
     if 'image' not in request.files:
-        return 'No image'
+        return 'No image file provided', 400
 
     temp_obj = {
         "ic": "31081960101984",
