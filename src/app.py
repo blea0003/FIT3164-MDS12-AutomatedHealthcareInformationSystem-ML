@@ -70,4 +70,4 @@ def patient_htr_sample():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
