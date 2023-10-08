@@ -1,6 +1,6 @@
 from extraction import get_boxes, display
 import cv2
-import tensorflow as tf
+# import tensorflow as tf
 import keras_ocr
 
 def text_box_htr(doc_img, model="keras_ocr", debug=False):
