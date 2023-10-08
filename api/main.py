@@ -1,5 +1,6 @@
 from extraction import get_boxes, display
 import cv2
+cv2.ocl.setUseOpenCL(False)
 # import tensorflow as tf
 import keras_ocr
 
